@@ -1,0 +1,1 @@
+# School-exemption-system-and-text-analysis-with-OCR
