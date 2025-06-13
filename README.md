@@ -89,8 +89,11 @@ Python ile geliştirilen bu özellik sayesinde:
 ## 📌 Teknolojiler
 
 - Python (OCR ve veri işleme)
-- React / Flutter (UI)
-- Firebase / SQL (veritabanı)
+- HTML
+- CSS
+- JAVASCRİPT
+- PHP
+- MYSQL (veritabanı)
 - Yapay Zeka algoritmaları (eşleştirme için)
 
 ---
