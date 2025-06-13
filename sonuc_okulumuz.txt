@@ -1,0 +1,11 @@
+Ders Kodu	Ders Adı	AKTS	T-U	Harf Notu	Ders İçeriği
+BLM101	Algoritma ve Programlama	6	3-2	-	1
+BLM102	Bilgisayar Donanımı	5	3-2	-	0
+BLM103	Ayrık Matematik	5	3-0	-	0
+BLM104	Lineer Cebir	5	3-0	-	0
+BLM201	Veri Yapıları ve Algoritmalar	6	3-2	-	0
+BLM202	Nesne Yönelimli Programlama	6	3-2	-	1
+BLM203	Web Programlama	6	3-2	-	1
+BLM301	İşletim Sistemleri	6	3-2	-	0
+BLM302	Bilgisayar Ağları	6	3-2	-	1
+CS104	C Programlamaya Giriş	6	3-4	-	1

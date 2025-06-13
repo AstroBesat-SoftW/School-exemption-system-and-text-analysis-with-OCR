@@ -1,0 +1,22 @@
+
+| Ders Adı                                   | Kredi | AKTS | Harf Notu |
+|--------------------------------------------|-------|------|-----------|
+| Atatürk İlkeleri ve İnkılap Tarihi I        | 2     | 1    | BB        |
+| Genel Fizik I                              | 3     | 6    | CB        |
+| Matematik I                                | 3     | 6    | CB        |
+| Oryantasyon                                | 1     | 1    | BB        |
+| İş Sağlığı Ve Güvenliği I                   | 2     | 2    | CC        |
+| Algoritma ve Programlama                    | 3     | 5    | BB        |
+| Bilgisayar Mühendisliğine Giriş             | 3     | 5    | BA        |
+| Türk Dili I                                | 2     | 1    | AA        |
+| Yabancı Dil I (İngilizce)                  | 2     | 2    | AA        |
+| Atatürk İlkeleri ve İnkılap Tarihi II       | 2     | 1    | AA        |
+| Genel Fizik II                             | 3     | 6    | BA        |
+| Matematik II                               | 3     | 6    | CB        |
+| İş Sağlığı Ve Güvenliği II                  | 2     | 2    | BA        |
+| Lineer Cebir                               | 3     | 5    | AA        |
+| Yapısal Programlama                        | 3     | 6    | AA        |
+| Türk Dili II                               | 2     | 1    | AA        |
+| İngilizce II                               | 2     | 2    | AA        |
+
+Genel Not Ortalaması: 3,26
