@@ -1,3 +1,5 @@
+Başlık Eklerim
+
 ![image](https://github.com/user-attachments/assets/0484912b-2230-4ea0-bb1a-1fbc8ba87ffa)
 
 Öğrenci Sisteme girerek muaf bilgilerini takip edebilir.
