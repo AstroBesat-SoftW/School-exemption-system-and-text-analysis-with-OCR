@@ -1,11 +1,13 @@
 ![image](https://github.com/user-attachments/assets/0484912b-2230-4ea0-bb1a-1fbc8ba87ffa)
 
 Öğrenci Sisteme girerek muaf bilgilerini takip edebilir.
+
 ![image](https://github.com/user-attachments/assets/e4a9ed26-b882-4c71-b9a8-d2b90e29877d)
 
 ![image](https://github.com/user-attachments/assets/3146a43e-c2f6-4f94-9ad3-575021d7c78e)
 
 Sonuçları indirebilir.
+
 ![image](https://github.com/user-attachments/assets/03445c33-b7d3-4ae7-bd6f-433c02f6e2bc)
 
 Yönetici - Öğrenci işleri
