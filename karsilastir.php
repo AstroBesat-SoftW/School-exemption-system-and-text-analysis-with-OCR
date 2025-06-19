@@ -125,64 +125,105 @@
         <h3>Eşleşen Satırlar:</h3>
         <div id="output"></div>
     </div>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    const leftText = document.getElementById("left-content").innerText;
+    const rightText = document.getElementById("right-content").innerText;
+    const output = document.getElementById("output");
 
-    <script>
-    window.addEventListener("DOMContentLoaded", () => {
-        const leftText = document.getElementById("left-content").innerText;
-        const rightText = document.getElementById("right-content").innerText;
-        const output = document.getElementById("output");
+    const leftLines = leftText.split('\n');
+    const rightLines = rightText.split('\n');
 
-        const leftLines = leftText.split('\n');
-        const rightLines = rightText.split('\n');
+    const gecerliNotlar = ["aa", "ba", "bb", "cb", "cc"];
+    const eslesenSonuclar = [];
 
-        const gecerliNotlar = ["aa", "ba", "bb", "cb", "cc"];
-        const eslesenSonuclar = [];
+    const normalize = (text) => text
+        .toLowerCase()
+        .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's')
+        .replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+        .replace(/[^\w\s]/g, '') // noktalama temizle
+        .replace(/\s+/g, ' ') // fazla boşlukları sadeleştir
+        .trim();
 
-        for (let i = 1; i < rightLines.length; i++) {
-            const sagSatir = rightLines[i].trim();
-            if (!sagSatir) continue;
+    for (let i = 1; i < rightLines.length; i++) {
+        const sagSatir = rightLines[i].trim();
+        if (!sagSatir) continue;
 
-            const kolonlar = sagSatir.split('\t');
-            if (kolonlar.length < 2) continue;
+        const kolonlar = sagSatir.split('\t');
+        if (kolonlar.length < 3) continue;
 
-            const dersAdi = kolonlar[1].trim().toLowerCase();
-            const sagAKTS = parseInt(kolonlar[2]);
+        const dersAdiSag = normalize(kolonlar[1]);
+        const sagAKTS = parseInt(kolonlar[2]);
 
-            for (const solSatir of leftLines) {
-                const temizSol = solSatir.toLowerCase();
-                if (temizSol.includes(dersAdi)) {
-                    let renkClass = "gray";
+        for (const solSatir of leftLines) {
+            if (!solSatir.includes('|')) continue;
 
-                    // Harf notu bul
-                    const harfNotuMatch = temizSol.match(/\b(aa|ba|bb|cb|cc|dd|fd|ff)\b/);
-                    const harfNotu = harfNotuMatch ? harfNotuMatch[1] : "";
-                    const notRiski = harfNotu && !gecerliNotlar.includes(harfNotu);
+            let dersAdiSol = "";
+            let harfNotu = "";
+            let solAKTS = NaN;
 
-                    // Sol AKTS bul (örnek: "| 3 | 5 | BB |", 2. sayı alınır)
-                    const solAKTSMatch = solSatir.match(/\|\s*(\d{1,2})\s*\|\s*(\d{1,2})\s*\|/);
-                    const solAKTS = solAKTSMatch ? parseInt(solAKTSMatch[2]) : null;
+            const parcalar = solSatir.split('|').map(p => p.trim()).filter(p => p.length > 0);
 
-                    const aktsRiski = (!isNaN(sagAKTS) && !isNaN(solAKTS) && sagAKTS > solAKTS);
+            // Ders adını çözümle
+            let dersAdParcasi = "";
 
-                    // Renk belirle
-                    if (notRiski || aktsRiski) {
-                        renkClass = "red";
-                    } else if (!notRiski && !aktsRiski && harfNotu) {
-                        renkClass = "green";
-                    }
+            // Format 1-2-4: "KOD - ADI" veya "KOD: ADI"
+            const dersAdMatch = parcalar.find(p => /[-:]/.test(p));
+            if (dersAdMatch) {
+                const ayir = dersAdMatch.split(/[-:]/);
+                dersAdParcasi = ayir.length > 1 ? ayir[1] : "";
+            }
+            // Format 3: "| KOD | ADI |"
+            else if (parcalar.length >= 4) {
+                dersAdParcasi = parcalar[1]; // İkinci parça genelde ders adı
+            }
 
-                    eslesenSonuclar.push(
-                        `<div class="${renkClass}">${solSatir.trim()}  <--->  ${sagSatir}</div>`
-                    );
-                    break;
+            dersAdiSol = normalize(dersAdParcasi);
+
+            // Harf notu ve AKTS'yi bul
+            const harfNotRegex = /\b(aa|ba|bb|cb|cc|dd|fd|ff)\b/;
+            const notKandidatlari = parcalar.filter(p => harfNotRegex.test(p.toLowerCase()));
+
+            if (notKandidatlari.length > 0) {
+                harfNotu = notKandidatlari[0].toLowerCase();
+            }
+
+            // AKTS adayları: sayı olanlar
+            const sayiParcalar = parcalar.map(p => parseInt(p)).filter(n => !isNaN(n));
+            if (sayiParcalar.length > 0) {
+                // AKTS'nin harf notundan sonra mı önce mi olduğunu anlamak zor olabilir, ama
+                // genelde 1-15 arasında olur, o yüzden:
+                const olasiAkts = sayiParcalar.find(n => n >= 1 && n <= 30);
+                if (!isNaN(olasiAkts)) solAKTS = olasiAkts;
+            }
+
+            if (!dersAdiSol) continue;
+
+            if (dersAdiSol.includes(dersAdiSag) || dersAdiSag.includes(dersAdiSol)) {
+                let renkClass = "gray";
+                const notRiski = harfNotu && !gecerliNotlar.includes(harfNotu);
+                const aktsRiski = (!isNaN(solAKTS) && !isNaN(sagAKTS) && sagAKTS > solAKTS);
+
+                if (notRiski || aktsRiski) {
+                    renkClass = "red";
+                } else if (!notRiski && !aktsRiski && harfNotu) {
+                    renkClass = "green";
                 }
+
+                eslesenSonuclar.push(
+                    `<div class="${renkClass}">${solSatir.trim()}  <--->  ${sagSatir}</div>`
+                );
+                break;
             }
         }
+    }
 
-        output.innerHTML = eslesenSonuclar.length
-            ? eslesenSonuclar.join('\n')
-            : "<div>🛑 Eşleşme bulunamadı.</div>";
-    });
-    </script>
+    output.innerHTML = eslesenSonuclar.length
+        ? eslesenSonuclar.join('\n')
+        : "<div>🛑 Eşleşme bulunamadı.</div>";
+});
+</script>
+
+
 </body>
 </html>
